@@ -10,6 +10,7 @@ int main()
     Voiture* voitures = malloc(sizeof(Voiture)*N); // le parc de n voitures
     char* matricule = malloc(sizeof(char)); // allocation dynamique de string
     char *file = "a.bin";
+    // fonction de initsation de parc de N voitures 
     init(voitures,N);
 
     do
