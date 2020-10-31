@@ -2,84 +2,69 @@
 #include <string.h>
 #include "ex2.h"
 
-//EX2 , 1
-void afficher_tableau(float *tab, int taille_tableau)
-{
-    for (int i = 0; i < taille_tableau; i++)
-    {
-        printf("%.2f ", tab[i]);
-    }
-}
-
 //EX2 ,2
-float maximale(float *tab, int taille_tableau)
+float pointMaximal(float *points, int pointsTaille)
 {
-    float max = tab[0];
-    for (int i = 1; i < taille_tableau; i++)
+    float max = points[0];
+    for (int i = 1; i < pointsTaille; i++)
     {
-        if (tab[i] >= max)
-            max = tab[i];
+        if (points[i] >= max)
+            max = points[i];
     }
     return max;
 }
 
-float minimale(float *tab, int taille_tableau)
+float pointMinimal(float *points, int pointsTaille)
 {
-    float min = tab[0];
-    for (int i = 1; i < taille_tableau; i++)
+    float min = points[0];
+    for (int i = 1; i < pointsTaille; i++)
     {
-        if (tab[i] <= min)
-            min = tab[i];
+        if (points[i] <= min)
+            min = points[i];
     }
     return min;
 }
 
-float moyen(float *tab, int taille_tableau)
+float pointMoyen(float *points, int pointsTaille)
 {
     float sum = 0;
-    for (int i = 0; i < taille_tableau; i++)
+    for (int i = 0; i < pointsTaille; i++)
     {
-        sum += tab[i];
+        sum += points[i];
     }
     return sum / N;
 }
 
 // EX2 3,4,5
-void Afficher_NOTES(int *tab, float *POINTS)
+void construireNotes(int *notes, float *points)
 {
-
-    printf("\nTABLEAU DE NOTES  : \n ");
     // cherche la valeur de tab[i] avec i dans [0,5]
     for (int i = 0; i < 6; i++)
     {
         for (int j = 0; j < N; j++)
         {
-            if ((POINTS[j] <= i * 10 + 9) && (POINTS[j] >= i * 10))
-                tab[i] += 1;
+            if ((points[j] <= i * 10 + 9) && (points[j] >= i * 10))
+                notes[i] += 1;
         }
     }
-    // 
+    //
     for (int j = 0; j < N; j++)
     {
-        if (POINTS[j] == 60)
-            tab[6] += 1;
+        if (points[j] == 60)
+            notes[6] += 1;
     }
 
-    for (int i = 0; i < 7; i++)
-    {
-        printf("%d ", tab[i]);
-    }
 }
 
-void graphique_en_batons(int *NOTES)
+void graphiqueEnBatons(int *notes)
 {
 
-    // CHERCHER MAXN in int array NOTES
-    int MAXN = NOTES[0];
+    // CHERCHER MAXN dans  NOTES
+    int MAXN = notes[0];
     for (int i = 1; i < 7; i++)
     {
-        if (NOTES[i] >= MAXN)
-            MAXN = NOTES[i];
+        if (notes[i] >= MAXN)
+            MAXN = notes[i];
     }
 
     // CONSTRUITRE graph en batons
@@ -89,7 +74,7 @@ void graphique_en_batons(int *NOTES)
 
         for (int j = 0; j < 7; j++)
         {
-            if (NOTES[j] >= i)
+            if (notes[j] >= i)
                 printf(" #####");
             else
                 printf("      ");
@@ -111,24 +96,24 @@ void graphique_en_batons(int *NOTES)
     printf("| 0-9 |10-19|20-29|30-39|40-49|50-59|  60 |");
 }
 
-void graphique_en_nuage(int *NOTES)
+void graphiqueEnNuage(int *notes)
 {
     // CHERCHER MAXN in int array NOTES
-    int MAXN = NOTES[0];
+    int MAXN = notes[0];
     for (int i = 1; i < 7; i++)
     {
-        if (NOTES[i] >= MAXN)
-            MAXN = NOTES[i];
+        if (notes[i] >= MAXN)
+            MAXN = notes[i];
     }
 
-    // CONSTRUITRE graph en batons
+    // CONSTRUITRE graph en nuage
     for (int i = MAXN; i >= 1; i--)
     {
         printf("%d > ", i);
 
         for (int j = 0; j < 7; j++)
         {
-            if (NOTES[j] == i)
+            if (notes[j] == i)
                 printf("   o  ");
             else
                 printf("      ");
@@ -141,7 +126,14 @@ void graphique_en_nuage(int *NOTES)
     printf("    ");
     for (int j = 0; j < 7; j++)
     {
-        printf("+-----");
+        if (notes[j] == 0)
+        {
+            printf("+--o--");
+        }
+        else
+        {
+            printf("+-----");
+        }
     }
     printf("+");
     printf("\n");
@@ -150,15 +142,15 @@ void graphique_en_nuage(int *NOTES)
     printf("| 0-9 |10-19|20-29|30-39|40-49|50-59|  60 |");
 }
 
-void entrer(float *tab, int taille_tab)
+void entrer(float *points, int pointsTaille)
 {
-    for (int i = 0; i < taille_tab; i++)
+    for (int i = 0; i < pointsTaille; i++)
     {
         int check = 0;
         do
         {
-            scanf("%f", &tab[i]);
-            if (tab[i] < 0 || tab[i] > 60)
+            scanf("%f", &points[i]);
+            if (points[i] < 0 || points[i] > 60)
             {
                 printf("Il faut que le point soit dans le range [0,60]!\n");
                 continue;
@@ -181,7 +173,7 @@ void entrer(float *tab, int taille_tab)
         //                 flag = 1;
         //                 break;
         //             }
-        //             tab[i] = 10 * tab[i] + (lettre[j] - '0'); // corvert lettres to chiffre qui est entregistré à tab
+        //             tab[i] = 10 * points[i] + (lettre[j] - '0'); // corvert lettres to chiffre qui est entregistré à tab
         //         }
         //         if (flag == 1)
         //         {
