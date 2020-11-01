@@ -25,8 +25,8 @@ void init(Voiture *voitures, int n)
             {
                 if (flag == 1)
                 {
-                    printf("numero immatricule %s exite deja \n", voitures[i].matricule);
-                    printf("Veuillez entrer autre numero :  ");
+                    printf("Le numero immatricule %s exite deja \n", voitures[i].matricule);
+                    printf("Veuillez entrer un autre numero :  ");
                     scanf("%s", voitures[i].matricule);
                     flag = verifierMatricule(voitures[i].matricule, voitures, i);
                 }
@@ -74,7 +74,7 @@ char *etatEnChaine(Etat etat)
         return "Disponible\n";
     else if (etat == 1)
     {
-        return "En cours location\n";
+        return "En cours de location\n";
     }
 }
 
@@ -137,7 +137,7 @@ int retour(char *matricule, Voiture *voitures, int n)
         }
         else
         {
-            printf(" le nombre de kilomeres effectues : ");
+            printf(" le nombre de kilometres effectues : ");
             float kilometre;
             scanf("%f", &kilometre);
             voitures[i].kilometrage += kilometre;
@@ -217,7 +217,7 @@ void initDeFichier(char *fichier, Voiture *voitures, int n)
     FILE *fichierPtr = fopen(fichier, "rb");
     if (fichierPtr == NULL)
     {
-        printf("Échoué d'ouvrir le fichier %s\n", fichier);
+        printf("Échec pour l'ouverture du fichier %s\n", fichier);
         exit(0);
     }
     fread(voitures, sizeof(Voiture), n, fichierPtr);
